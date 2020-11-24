@@ -3,9 +3,9 @@
 # exclude everything
 encoders/encodingOutput/*
 encoders/HEVC_HM/*
-encoders/sourceVideofiles
-encoders/VVCSoftware_VTM
-encoders/vvenc
+encoders/sourceVideofiles/*
+encoders/VVCSoftware_VTM/*
+encoders/vvenc/*
 
 # exception to the rule
 !encoders/encodingOutput/.gitkeep

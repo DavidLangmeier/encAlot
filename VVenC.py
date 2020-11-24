@@ -2,12 +2,12 @@ import subprocess
 from pathlib import Path
 
 # path variables
-vvenc_dir = Path("C:/vvenc-master/out/build/x64-Debug/source/App/vvencFFapp/")
+vvenc_dir = Path("encoders/vvenc/out/build/x64-Debug/source/App/vvencFFapp/")
 vvenc_exe = vvenc_dir / "vvencFFapp.exe"
-vvenc_encoderConfig = Path("C:/vvenc-master/cfg/randomaccess_faster.cfg")
-vvenc_sequenceConfig = Path("C:/vvenc-master/cfg/BigBuckBunny.cfg")
-vvenc_rfcConfig = Path("C:/vvenc-master/cfg/frc.cfg")
-vvenc_outputPath = str("C:/EncodingResults/automated/")
+vvenc_encoderConfig = Path("encoders/vvenc//cfg/randomaccess_fast.cfg")
+vvenc_sequenceConfig = Path("encoders/vvenc/cfg/BigBuckBunny.cfg")
+vvenc_rfcConfig = Path("encoders/vvenc/cfg/frc.cfg")
+vvenc_outputPath = str("encoders/encodingOutput/")
 
 
 def encode(filename, tbr, preset):

@@ -10,7 +10,7 @@ hm_outputPath = str("encoders/encodingOutput/")
 
 
 def encode(filename, tbr):
-    print("*** multiEnc: HEVC-HM encoding with bitrate " + str(tbr) + "\n")
+    print("*** HEVC-HM encoding with bitrate " + str(tbr) + "***\n")
 
     binaryOutput = hm_outputPath + str(filename) + "_" + "HM" + "_" + str(int(tbr / 1000)) + "kbps" + "_str.bin"
     recOutput = hm_outputPath + str(filename) + "_" + "HM" + "_" + str(int(tbr / 1000)) + "kbps" + "_rec.yuv"

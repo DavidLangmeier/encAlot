@@ -10,7 +10,7 @@ vtm_outputPath = str("encoders/encodingOutput/")
 
 
 def encode(filename, tbr):
-    print("*** multiEnc - VVC-VTM encoding started; TargetBitrate = " + str(tbr))
+    print("*** VVC-VTM encoding started; TargetBitrate = " + str(tbr))
 
     binaryOutput = vtm_outputPath + str(filename) + "_" + "VTM" + "_" + str(int(tbr / 1000)) + "kbps" + "_str.bin"
     recOutput = vtm_outputPath + str(filename) + "_" + "VTM" + "_" + str(int(tbr / 1000)) + "kbps" + "_rec.yuv"

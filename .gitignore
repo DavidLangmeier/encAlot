@@ -3,15 +3,16 @@
 # exclude everything
 encoders/encodingOutput/*
 encoders/HEVC_HM/*
-encoders/sourceVideofiles/*
+encoders/videoSourcefiles/*
 encoders/VVCSoftware_VTM/*
 encoders/vvenc/*
 
 # exception to the rule
 !encoders/encodingOutput/.gitkeep
 !encoders/HEVC_HM/.gitkeep
-!encoders/sourceVideofiles/.gitkeep
+!encoders/videoSourcefiles/.gitkeep
 !encoders/VVCSoftware_VTM/.gitkeep
 !encoders/vvenc/.gitkeep
 
 setup.py
+VVenC.py

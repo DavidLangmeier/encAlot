@@ -2,15 +2,15 @@ import subprocess
 from pathlib import Path
 
 # path variables
-hm_dir = Path("C:\HEVC_HM-master/bin/ninja/msvc-19.27/x86_64/debug")
+hm_dir = Path("encoders/HEVC_HM/bin/ninja/msvc-19.27/x86_64/debug")
 hm_exe = hm_dir / "TappEncoder.exe"
-hm_encoderConfig = Path("C:/HEVC_HM-master/cfg/encoder_randomaccess_main.cfg")
-hm_sequenceConfig = Path("C:/HEVC_HM-master/cfg/per-sequence/BigBuckBunny.cfg")
-hm_outputPath = str("C:/EncodingResults/automated/")
+hm_encoderConfig = Path("encoders/HEVC_HM/cfg/encoder_randomaccess_main.cfg")
+hm_sequenceConfig = Path("encoders/HEVC_HM/cfg/per-sequence/BigBuckBunny.cfg")
+hm_outputPath = str("encoders/encodingOutput/")
 
 
 def encode(filename, tbr):
-    print("*** multiEnc: HEVC-HM encoding with bitrate " + str(tbr) + "\n")
+    print("*** HEVC-HM encoding with bitrate " + str(tbr) + "***\n")
 
     binaryOutput = hm_outputPath + str(filename) + "_" + "HM" + "_" + str(int(tbr / 1000)) + "kbps" + "_str.bin"
     recOutput = hm_outputPath + str(filename) + "_" + "HM" + "_" + str(int(tbr / 1000)) + "kbps" + "_rec.yuv"

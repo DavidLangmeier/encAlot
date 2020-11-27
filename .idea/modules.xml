@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/multiEnc.iml" filepath="$PROJECT_DIR$/.idea/multiEnc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/encAlot.iml" filepath="$PROJECT_DIR$/.idea/encAlot.iml" />
     </modules>
   </component>
 </project>

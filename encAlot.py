@@ -1,30 +1,34 @@
-# multiEnc v.0.1
+# encAlot v.0.2
 # a tool to automate encoding video files
 # written by David Langmeier
 
 import sys
-import VVenC, VTM, HM
+import VVenCFF, VTM, HM
 
 # parse arguments
 encoder = sys.argv[1]
 filename = sys.argv[2]
 # parse list of targetbitrates
 n = len(sys.argv[3])
-targetBitrates = sys.argv[3][1:n-1]
+targetBitrates = sys.argv[3][1:n - 1]
 targetBitrates = targetBitrates.split(',')
 
-print("*** multiEnc 0.1 started ***\n")
+print("*** encAlot 0.2 started ***\n")
 
-if encoder == "vvenc":
-    preset = sys.argv[4]
-    print(preset)
+if encoder == "vvencFF":
+    encfg = sys.argv[4]
+    threads = 0
+    if int(sys.argv[5]) > 0 and sys.argv[5] != None :
+        threads = int(sys.argv[5])
     for i in targetBitrates:
-        VVenC.encode(filename, int(i), preset)
+        VVenCFF.encode(filename, int(i), encfg, threads)
+
 elif encoder == "vtm":
     for i in targetBitrates:
         VTM.encode(filename, int(i))
+
 elif encoder == "hm":
     for i in targetBitrates:
         HM.encode(filename, int(i))
 
-print("*** multiEnc : all encodings done ***")
+print("*** encAlot : all encodings done ***")

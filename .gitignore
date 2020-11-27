@@ -1,0 +1,18 @@
+# exclude everything of the "encoders" folder structure but the folders themselves
+
+# exclude everything
+encoders/encodingOutput/*
+encoders/HEVC_HM/*
+encoders/videoSourcefiles/*
+encoders/VVCSoftware_VTM/*
+encoders/vvenc/*
+
+# exception to the rule
+!encoders/encodingOutput/.gitkeep
+!encoders/HEVC_HM/.gitkeep
+!encoders/videoSourcefiles/.gitkeep
+!encoders/VVCSoftware_VTM/.gitkeep
+!encoders/vvenc/.gitkeep
+
+setup.py
+VVenC.py

@@ -42,6 +42,7 @@ def encode(filename, tbr, encfg, threads):
                             text=True
                             )
 
+    print(str(result))
     print("stderr: ", result.stderr)
     print("stdout: ", result.stdout)
     log = open(Path(logfile), "w+")

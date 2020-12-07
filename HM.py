@@ -2,10 +2,9 @@ import subprocess
 from pathlib import Path
 
 # path variables
-hm_dir = Path("encoders/HEVC_HM/bin/ninja/msvc-19.27/x86_64/debug")
-hm_exe = hm_dir / "TappEncoder.exe"
-hm_encoderConfig = Path("encoders/HEVC_HM/cfg/encoder_randomaccess_main.cfg")
-hm_sequenceConfig = Path("encoders/HEVC_HM/cfg/per-sequence/BigBuckBunny.cfg")
+hm_exe = "./encoders/HM/bin/umake/gcc-9.3/x86_64/release/TAppEncoder"
+hm_encoderConfig = Path("encoders/HM/cfg/encoder_randomaccess_main.cfg")
+hm_sequenceConfig = Path("encoders/videoSourcefiles/BigBuckBunny.cfg")
 hm_outputPath = str("encoders/encodingOutput/")
 
 

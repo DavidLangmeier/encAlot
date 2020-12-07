@@ -1,4 +1,4 @@
-# encAlot v.0.2
+# encAlot v.0.3
 # a tool to automate encoding video files
 # written by David Langmeier
 
@@ -13,7 +13,7 @@ n = len(sys.argv[3])
 targetBitrates = sys.argv[3][1:n - 1]
 targetBitrates = targetBitrates.split(',')
 
-print("*** encAlot 0.2 started ***\n")
+print("*** encAlot 0.3 started ***\n")
 
 if encoder == "vvencFF":
     encfg = sys.argv[4]

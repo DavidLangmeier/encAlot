@@ -2,10 +2,9 @@ import subprocess
 from pathlib import Path
 
 # path variables
-vtm_dir = Path("encoders/VVCSoftware_VTM/bin/ninja/msvc-19.27/x86_64/debug")
-vtm_exe = vtm_dir / "EncoderApp.exe"
+vtm_exe = "./encoders/VVCSoftware_VTM/bin/umake/gcc-9.3/x86_64/release/EncoderApp"
 vtm_encoderConfig = Path("encoders/VVCSoftware_VTM/cfg/encoder_randomaccess_vtm_gop16.cfg")
-vtm_sequenceConfig = Path("encoders/VVCSoftware_VTM/cfg/per-sequence/BigBuckBunny.cfg")
+vtm_sequenceConfig = Path("encoders/videoSourcefiles/BigBuckBunny.cfg")
 vtm_outputPath = str("encoders/encodingOutput/")
 
 

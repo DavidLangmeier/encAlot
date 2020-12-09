@@ -2,7 +2,7 @@ import subprocess
 from pathlib import Path
 
 # path variables
-vvencFF_exe = "./encoders/vvenc/build/release-static/source/App/vvencFFapp/vvencFFapp"
+vvencFF_exe = "./encoders/vvenc/install/bin/vvencFFapp"
 vvencFF_encoderCfgPath = str("encoders/vvenc/cfg/")
 vvencFF_sequenceConfig = str("encoders/videoSourcefiles/")
 vvencFF_rfcConfig = Path("encoders/vvenc/cfg/frc.cfg")

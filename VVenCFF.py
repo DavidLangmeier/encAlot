@@ -11,7 +11,7 @@ vvencFF_outputPath = str("encoders/encodingOutput/")
 
 def encode(filename, tbr, encfg, threads):
     print("*** vvencFF encoding started; TargetBitrate = " + str(tbr) + ", encoder Config: " + encfg
-          + "Threads: " + str(threads) + " ***\n")
+          + " Threads: " + str(threads) + " ***\n")
 
     encoderConfig = vvencFF_encoderCfgPath + str(encfg) + ".cfg"
     BinaryOutput = (vvencFF_outputPath + str(filename) + "_" + "vvencFF" + "_"

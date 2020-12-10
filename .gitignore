@@ -6,6 +6,7 @@ encoders/HM
 encoders/videoSourcefiles/*
 encoders/VVCSoftware_VTM
 encoders/vvenc
+venv
 
 # exception to the rule
 !encoders/encodingOutput/.gitkeep

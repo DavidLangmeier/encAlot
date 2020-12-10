@@ -1,4 +1,5 @@
 import subprocess
+from subprocess import PIPE
 from pathlib import Path
 
 # path variables
@@ -37,14 +38,8 @@ def encode(seqCfg, filename, tbr, encfg, threads):
         options.append(numWppThreads)
         options.append(wppBitEqual)
 
-    result = subprocess.run(options,
-                            capture_output=True,
-                            text=True
-                            )
-
-    print(str(result))
-    print("stderr: ", result.stderr)
-    print("stdout: ", result.stdout)
     log = open(Path(logfile), "w+")
-    log.write(result.stdout)
+    result = subprocess.run(options,
+                            stdout=log
+                            )
     log.close()

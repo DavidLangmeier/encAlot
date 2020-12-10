@@ -1,4 +1,5 @@
 import subprocess
+from subprocess import PIPE
 from pathlib import Path
 
 # path variables
@@ -17,6 +18,7 @@ def encode(seqCfg, filename, tbr):
     logfile = hm_outputPath + str(filename) + "_" + "HM" + "_" + str(int(tbr / 1000)) + "kbps" + "_log.txt"
     targetBitrate = "--TargetBitrate=" + str(tbr)
 
+    log = open(Path(logfile), "w+")
     result = subprocess.run([hm_exe,
                              "-c", hm_encoderConfig,
                              "-c", Path(sequenceConfig),
@@ -24,12 +26,6 @@ def encode(seqCfg, filename, tbr):
                              "-o", Path(recOutput),
                              targetBitrate,
                              "--PrintMSSSIM=1"],
-                            capture_output=True,
-                            text=True
+                            stdout=log
                             )
-
-    print("stderr: ", result.stderr)
-    print("stdout: ", result.stdout)
-    log = open(Path(logfile), "w+")
-    log.write(result.stdout)
     log.close()

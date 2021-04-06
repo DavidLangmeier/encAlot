@@ -1,19 +1,20 @@
 import subprocess
+from subprocess import PIPE
 from pathlib import Path
 
 # path variables
-vvencFF_dir = Path("encoders/vvenc/out/build/x64-Debug/source/App/vvencFFapp/")
-vvencFF_exe = vvencFF_dir / "vvencFFapp.exe"
+vvencFF_exe = "./encoders/vvenc/install/bin/vvencFFapp"
 vvencFF_encoderCfgPath = str("encoders/vvenc/cfg/")
-vvencFF_sequenceConfig = Path("encoders/vvenc/cfg/BigBuckBunny.cfg")
+vvencFF_sequenceConfig = str("encoders/videoSourcefiles/")
 vvencFF_rfcConfig = Path("encoders/vvenc/cfg/frc.cfg")
 vvencFF_outputPath = str("encoders/encodingOutput/")
 
 
-def encode(filename, tbr, encfg, threads):
+def encode(seqCfg, filename, tbr, encfg, threads):
     print("*** vvencFF encoding started; TargetBitrate = " + str(tbr) + ", encoder Config: " + encfg
-          + "Threads: " + str(threads) + " ***\n")
+          + " Threads: " + str(threads) + " ***\n")
 
+    sequenceConfig = vvencFF_sequenceConfig + str(seqCfg)
     encoderConfig = vvencFF_encoderCfgPath + str(encfg) + ".cfg"
     BinaryOutput = (vvencFF_outputPath + str(filename) + "_" + "vvencFF" + "_"
                     + str(encfg) + "_" + str(int(tbr / 1000)) + "kbps" + "_str.bin")
@@ -25,7 +26,7 @@ def encode(filename, tbr, encfg, threads):
 
     options = [vvencFF_exe,
                "-c", Path(encoderConfig),
-               "-c", vvencFF_sequenceConfig,
+               "-c", Path(sequenceConfig),
                "-c", vvencFF_rfcConfig,
                "-b", Path(BinaryOutput),
                "-o", Path(RecOutput),
@@ -37,13 +38,8 @@ def encode(filename, tbr, encfg, threads):
         options.append(numWppThreads)
         options.append(wppBitEqual)
 
-    result = subprocess.run(options,
-                            capture_output=True,
-                            text=True
-                            )
-
-    print("stderr: ", result.stderr)
-    print("stdout: ", result.stdout)
     log = open(Path(logfile), "w+")
-    log.write(result.stdout)
+    result = subprocess.run(options,
+                            stdout=log
+                            )
     log.close()

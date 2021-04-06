@@ -1,6 +1,6 @@
 # download and install codecs
 
-import os, subprocess
+import os, subprocess, sys
 from pathlib import Path
 
 
@@ -10,37 +10,82 @@ gitVTM = "https://vcgit.hhi.fraunhofer.de/jvet/VVCSoftware_VTM.git"
 gitVVenC = "https://github.com/fraunhoferhhi/vvenc.git"
 
 
-# clone the git repositories
-print("\n*** encAlot - cloning & building codecs now ***")
-os.chdir("encoders")
+def installHM():
+    print("\n*** cloning HEVC-HM git repository ***\n")
+    try:
+        subprocess.run(["git", "clone", gitHM])
+    except Exception as e:
+        print("\n*** cloning HEVC-HM git repository FAILED ***\n")
+        print(e)
+        return
 
-print("\n*** cloning HEVC-HM git repository ***\n")
-subprocess.run(["git", "clone", gitHM])
-print("\n*** building HEVC-HM software ***\n")
-os.chdir("HM")
-subprocess.run(["mkdir", "build"])
-os.chdir(Path("build"))
-subprocess.run(["cmake", "..", "-DCMAKE_BUILD_TYPE=Release"])
-subprocess.run(["make", "-j"])
-os.chdir("..")
-os.chdir("..")
+    print("\n*** building HEVC-HM software ***\n")
+    try:
+        os.chdir("HM")
+        subprocess.run(["mkdir", "build"])
+        os.chdir(Path("build"))
+        subprocess.run(["cmake", "..", "-DCMAKE_BUILD_TYPE=Release"])
+        subprocess.run(["make", "-j"])
+        os.chdir("..")
+        os.chdir("..")
+    except Exception as e:
+        print("\n*** building HEVC-HM software FAILED ***\n")
+        print(e)
 
-print("\n*** cloning VVC-VVenC git repository ***\n")
-subprocess.run(["git", "clone", gitVVenC])
-print("\n*** building VVC-VVenC software ***\n")
-os.chdir(Path("vvenc"))
-subprocess.run(["make", "install-release"])
-os.chdir("..")
 
-print("\n*** cloning VVC-VTM git repository ***\n")
-subprocess.run(["git", "clone", gitVTM])
-print("\n*** building VVC-VTM software ***\n")
-os.chdir(Path("VVCSoftware_VTM"))
-subprocess.run(["mkdir", "build"])
-os.chdir("build")
-subprocess.run(["cmake", "..", "-DCMAKE_BUILD_TYPE=Release"])
-subprocess.run(["make"])    # with option -j the make process crashed on my machine
-os.chdir("..")
-os.chdir("..")
+def installVVenC():
+    print("\n*** cloning VVC-VVenC git repository ***\n")
+    try:
+        subprocess.run(["git", "clone", gitVVenC])
+    except Exception as e:
+        print("\n*** cloning VVC-VVenC git repository FAILED ***\n")
+        print(e)
+        return
 
-print("\n*** all codecs installed and ready ***")
+    print("\n*** building VVC-VVenC software ***\n")
+    try:
+        os.chdir(Path("vvenc"))
+        subprocess.run(["make", "install-release"])
+        os.chdir("..")
+    except Exception as e:
+        print("\n*** building VVC-VVenC software FAILED ***\n")
+        print(e)
+
+
+def installVTM():
+    print("\n*** cloning VVC-VTM git repository ***\n")
+    try:
+        subprocess.run(["git", "clone", gitVTM])
+    except Exception as e:
+        print("\n*** cloning VVC-VTM git repository FAILED ***\n")
+        print(e)
+        return
+
+    print("\n*** building VVC-VTM software ***\n")
+    try:
+        os.chdir(Path("VVCSoftware_VTM"))
+        subprocess.run(["mkdir", "build"])
+        os.chdir("build")
+        subprocess.run(["cmake", "..", "-DCMAKE_BUILD_TYPE=Release"])
+        subprocess.run(["make"])  # with option -j the make process crashed on my machine
+    except Exception as e:
+        print("\n*** building VVC-VTM software FAILED ***\n")
+        print(e)
+
+
+def main():
+    print("*** encAlot setup started ***\n")
+
+    # clone the git repositories and build software
+    print("\n*** encAlot - cloning & building codecs now ***")
+    os.chdir("encoders")
+    installHM()
+    installVTM()
+    installVVenC()
+
+    print("\n*** all codecs installed and ready ***")
+    print("\n*** setup complete ***")
+
+
+if __name__ == "__main__":
+    main()

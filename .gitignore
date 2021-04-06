@@ -12,5 +12,3 @@ venv
 !encoders/encodingOutput/.gitkeep
 !encoders/videoSourcefiles/.gitkeep
 !encoders/videoSourcefiles/*.cfg
-
-VVenC.py

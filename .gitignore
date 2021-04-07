@@ -8,6 +8,7 @@ encoders/VVCSoftware_VTM
 encoders/vvenc
 venv
 test.py
+encAlot2.py
 
 # exception to the rule
 !encoders/encodingOutput/.gitkeep

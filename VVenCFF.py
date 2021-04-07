@@ -1,18 +1,16 @@
 import subprocess
-from subprocess import PIPE
 from pathlib import Path
 
 # path variables
-vvencFF_exe = "./encoders/vvenc/install/bin/vvencFFapp"
-vvencFF_encoderCfgPath = str("encoders/vvenc/cfg/")
+vvencFF_exe = "./encoders/vvenc/bin/release-static/vvencFFapp"
+vvencFF_encoderCfgPath = str("encoders/vvenc/cfg/randomaccess_")
 vvencFF_sequenceConfig = str("encoders/videoSourcefiles/")
-vvencFF_frcConfig = Path("encoders/vvenc/cfg/frc.cfg")
 vvencFF_outputPath = str("encoders/encodingOutput/")
 
 
 def encode(seqCfg, filename, tbr, encfg, threads):
-    print("*** vvencFF encoding started; TargetBitrate = " + str(tbr) + ", encoder Config: " + encfg
-          + " Threads: " + str(threads) + " ***\n")
+    print("*** vvenc encoding started; TargetBitrate = " + str(tbr) + ", preset: " + encfg
+          + ", Threads: " + str(threads) + " ***\n")
 
     sequenceConfig = vvencFF_sequenceConfig + str(seqCfg)
     encoderConfig = vvencFF_encoderCfgPath + str(encfg) + ".cfg"
@@ -27,7 +25,6 @@ def encode(seqCfg, filename, tbr, encfg, threads):
     options = [vvencFF_exe,
                "-c", Path(encoderConfig),
                "-c", Path(sequenceConfig),
-               "-c", vvencFF_frcConfig,
                "-b", Path(BinaryOutput),
                "-o", Path(RecOutput),
                targetBitrate]
@@ -35,11 +32,13 @@ def encode(seqCfg, filename, tbr, encfg, threads):
     if threads > 0:
         numWppThreads = "--NumWppThreads=" + str(threads)
         wppBitEqual = "--WppBitEqual=1"
-        options.append(numWppThreads)
-        options.append(wppBitEqual)
+        #options.append(numWppThreads)
+        #options.append(wppBitEqual)
+        options.append("--Threads=" + str(threads))
 
     log = open(Path(logfile), "w+")
     result = subprocess.run(options,
-                            stdout=log
+                            stdout=log,
+                            stderr=log
                             )
     log.close()

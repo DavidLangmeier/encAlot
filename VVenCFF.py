@@ -6,7 +6,7 @@ from pathlib import Path
 vvencFF_exe = "./encoders/vvenc/install/bin/vvencFFapp"
 vvencFF_encoderCfgPath = str("encoders/vvenc/cfg/")
 vvencFF_sequenceConfig = str("encoders/videoSourcefiles/")
-vvencFF_rfcConfig = Path("encoders/vvenc/cfg/frc.cfg")
+vvencFF_frcConfig = Path("encoders/vvenc/cfg/frc.cfg")
 vvencFF_outputPath = str("encoders/encodingOutput/")
 
 
@@ -27,7 +27,7 @@ def encode(seqCfg, filename, tbr, encfg, threads):
     options = [vvencFF_exe,
                "-c", Path(encoderConfig),
                "-c", Path(sequenceConfig),
-               "-c", vvencFF_rfcConfig,
+               "-c", vvencFF_frcConfig,
                "-b", Path(BinaryOutput),
                "-o", Path(RecOutput),
                targetBitrate]

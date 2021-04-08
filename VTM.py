@@ -1,5 +1,4 @@
 import subprocess
-from subprocess import PIPE
 from pathlib import Path
 
 # path variables

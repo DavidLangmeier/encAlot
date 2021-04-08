@@ -55,8 +55,8 @@ def main():
         # run VVenC
         encfg = sys.argv[5]
         threads = 0
-        if int(sys.argv[6]) > 0 and sys.argv[6] != None:
-            threads = int(sys.argv[6])
+        if int(args["thr"]) > 0 and args["thr"] != None:
+            threads = int(args["thr"])
         for i in targetBitrates:
             VVenCFF.encode(seqCfg, filename, int(i), encfg, threads)
         # run VTM

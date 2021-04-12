@@ -1,50 +1,77 @@
-# encAlot v.0.3
-# a tool to automate encoding video files
+# encAlot v.0.5
+# a tool to automate batch encoding of video files
 # written by David Langmeier
 
-import sys
+import sys, argparse
 import VVenCFF, VTM, HM
 
-# parse arguments
-encoder = sys.argv[1]
-seqCfg = sys.argv[2]
-filename = sys.argv[3]
-# parse list of targetbitrates
-n = len(sys.argv[4])
-targetBitrates = sys.argv[4][1:n - 1]
-targetBitrates = targetBitrates.split(',')
 
-print("*** encAlot 0.3 started ***\n")
+def parseArgs():
+    argparser = argparse.ArgumentParser(description="encAlot help")
 
-if encoder == "vvencFF":
-    encfg = sys.argv[5]
-    threads = 0
-    if int(sys.argv[6]) > 0 and sys.argv[6] != None :
-        threads = int(sys.argv[6])
-    for i in targetBitrates:
-        VVenCFF.encode(seqCfg, filename, int(i), encfg, threads)
+    argparser.add_argument("-enc", type=str, required=True, action="store", dest="enc",
+                           help="Encoder can be \'hm\', \'vtm\', \'vvencFF\', or \'all\'")
+    argparser.add_argument("-sc", type=str, required=True, action="store", dest="sc",
+                           help="Sequence .cfg at /encoders/videoSourcefiles")
+    argparser.add_argument("-fn", type=str, required=True, action="store", dest="fn",
+                           help="Filename to identify output")
+    argparser.add_argument("-tbr", type=int, nargs="+", required=True, action="store", dest="tbr",
+                           help="Provide 4 target bitrates in bps \'w x y z\'")
+    argparser.add_argument("-pre", type=str, required=False, action="store", dest="pre",
+                           help="vvenc only: preset \'faster\', \'fast\', \'medium\', \'slow\' or \'slower\'")
+    argparser.add_argument("-thr", type=int, required=False, action="store", dest="thr",
+                           help="vvenc only: number of threads")
 
-elif encoder == "vtm":
-    for i in targetBitrates:
-        VTM.encode(seqCfg, filename, int(i))
+    return vars(argparser.parse_args())
 
-elif encoder == "hm":
-    for i in targetBitrates:
-        HM.encode(seqCfg, filename, int(i))
 
-elif encoder == "all":
-    # run VVenC
-    encfg = sys.argv[5]
-    threads = 0
-    if int(sys.argv[6]) > 0 and sys.argv[6] != None:
-        threads = int(sys.argv[6])
-    for i in targetBitrates:
-        VVenCFF.encode(seqCfg, filename, int(i), encfg, threads)
-    # run VTM
-    for i in targetBitrates:
-        VTM.encode(seqCfg, filename, int(i))
-    # run HM
-    for i in targetBitrates:
-        HM.encode(seqCfg, filename, int(i))
+def main():
+    print("*** encAlot 0.5 started ***\n")
 
-print("*** encAlot : all encodings done ***")
+    args = parseArgs()
+    encoder = args["enc"]
+    seqCfg = args["sc"]
+    filename = args["fn"]
+    n = len(args["tbr"])
+    targetBitrates = args["tbr"]
+
+    if encoder == "vvencFF":
+        encfg = args["pre"]
+        threads = 1
+        if int(args["thr"]) > 1 and args["thr"] != None :
+            threads = int(args["thr"])
+        for i in targetBitrates:
+            VVenCFF.encode(seqCfg, filename, i, encfg, threads)
+
+    elif encoder == "vtm":
+        for i in targetBitrates:
+            VTM.encode(seqCfg, filename, int(i))
+
+    elif encoder == "hm":
+        for i in targetBitrates:
+            HM.encode(seqCfg, filename, int(i))
+
+    elif encoder == "all":
+        # run VVenC
+        encfg = sys.argv[5]
+        threads = 1
+        if int(args["thr"]) > 1 and args["thr"] != None:
+            threads = int(args["thr"])
+        for i in targetBitrates:
+            VVenCFF.encode(seqCfg, filename, int(i), encfg, threads)
+        # run VTM
+        for i in targetBitrates:
+            VTM.encode(seqCfg, filename, int(i))
+        # run HM
+        for i in targetBitrates:
+            HM.encode(seqCfg, filename, int(i))
+
+    else:
+        print("*** ERROR: No valid encoder [-enc] provided. Valid encoders are: 'hm', 'vtm', 'vvencFF' and 'all' ***")
+        return
+
+    print("*** encAlot : all encodings done ***")
+
+
+if __name__ == "__main__":
+    main()

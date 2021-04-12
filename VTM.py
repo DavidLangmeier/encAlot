@@ -1,9 +1,8 @@
 import subprocess
-from subprocess import PIPE
 from pathlib import Path
 
 # path variables
-vtm_exe = "./encoders/VVCSoftware_VTM/bin/umake/gcc-9.3/x86_64/release/EncoderApp"
+vtm_exe = "./encoders/VVCSoftware_VTM/bin/umake/gcc-7.5/x86_64/release/EncoderApp"
 vtm_encoderConfig = Path("encoders/VVCSoftware_VTM/cfg/encoder_randomaccess_vtm_gop16.cfg")
 vtm_sequenceConfig = "encoders/videoSourcefiles/"
 vtm_outputPath = str("encoders/encodingOutput/")
@@ -27,6 +26,6 @@ def encode(seqCfg, filename, tbr):
                              targetBitrate,
                              "--PrintMSSSIM=1"],
                             stdout=log,
-                            stderr=PIPE
+                            stderr=log
                             )
     log.close()

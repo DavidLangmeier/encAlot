@@ -1,9 +1,8 @@
 import subprocess
-from subprocess import PIPE
 from pathlib import Path
 
 # path variables
-hm_exe = "./encoders/HM/bin/umake/gcc-9.3/x86_64/release/TAppEncoder"
+hm_exe = "./encoders/HM/bin/umake/gcc-7.5/x86_64/release/TAppEncoder"
 hm_encoderConfig = Path("encoders/HM/cfg/encoder_randomaccess_main.cfg")
 hm_sequenceConfig = "encoders/videoSourcefiles/"
 hm_outputPath = str("encoders/encodingOutput/")
@@ -26,6 +25,7 @@ def encode(seqCfg, filename, tbr):
                              "-o", Path(recOutput),
                              targetBitrate,
                              "--PrintMSSSIM=1"],
-                            stdout=log
+                            stdout=log,
+                            stderr=log
                             )
     log.close()

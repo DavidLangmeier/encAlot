@@ -8,7 +8,6 @@ encoders/VVCSoftware_VTM
 encoders/vvenc
 venv
 test.py
-GetMetrics.py
 
 # exception to the rule
 !encoders/encodingOutput/.gitkeep

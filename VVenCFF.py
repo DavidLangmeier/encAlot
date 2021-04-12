@@ -18,7 +18,7 @@ def encode(seqCfg, filename, tbr, encfg, threads):
                     + str(encfg) + "_" + str(int(tbr / 1000)) + "kbps" + "_str.bin")
     RecOutput = (vvencFF_outputPath + str(filename) + "_" + "vvencFF" + "_"
                  + str(encfg) + "_" + str(int(tbr / 1000)) + "kbps" + "_rec.yuv")
-    logfile = (vvencFF_outputPath + str(filename) + "_" + "vvencFF" + "_"
+    logfile = (vvencFF_outputPath + str(filename) + "_" + "vvencFF" + "_" + str(threads) + "T_"
                + str(encfg) + "_" + str(int(tbr / 1000)) + "kbps" + "_log.txt")
     targetBitrate = "--TargetBitrate=" + str(tbr)
 
@@ -29,7 +29,7 @@ def encode(seqCfg, filename, tbr, encfg, threads):
                "-o", Path(RecOutput),
                targetBitrate]
 
-    if threads > 0:
+    if threads > 1:
         numWppThreads = "--NumWppThreads=" + str(threads)
         wppBitEqual = "--WppBitEqual=1"
         #options.append(numWppThreads)

@@ -37,8 +37,8 @@ def main():
 
     if encoder == "vvencFF":
         encfg = args["pre"]
-        threads = 0
-        if int(args["thr"]) > 0 and args["thr"] != None :
+        threads = 1
+        if int(args["thr"]) > 1 and args["thr"] != None :
             threads = int(args["thr"])
         for i in targetBitrates:
             VVenCFF.encode(seqCfg, filename, i, encfg, threads)
@@ -54,8 +54,8 @@ def main():
     elif encoder == "all":
         # run VVenC
         encfg = sys.argv[5]
-        threads = 0
-        if int(args["thr"]) > 0 and args["thr"] != None:
+        threads = 1
+        if int(args["thr"]) > 1 and args["thr"] != None:
             threads = int(args["thr"])
         for i in targetBitrates:
             VVenCFF.encode(seqCfg, filename, int(i), encfg, threads)
@@ -65,6 +65,10 @@ def main():
         # run HM
         for i in targetBitrates:
             HM.encode(seqCfg, filename, int(i))
+
+    else:
+        print("*** ERROR: No valid encoder [-enc] provided. Valid encoders are: 'hm', 'vtm', 'vvencFF' and 'all' ***")
+        return
 
     print("*** encAlot : all encodings done ***")
 

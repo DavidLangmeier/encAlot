@@ -80,8 +80,8 @@ def main():
     print("\n*** encAlot - cloning & building codecs now ***")
     os.chdir("encoders")
     installHM()
-    installVTM()
     installVVenC()
+    installVTM()
 
     print("\n*** all codecs installed and ready ***")
     print("\n*** setup complete ***")

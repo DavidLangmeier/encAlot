@@ -115,7 +115,7 @@ def main():
                     # search for libVMAF output (xml file) with same filename
                     # if it exists get metrics and write to csvRow
                     xmlFilename = buildFilename(filename)
-                    if path.exists("encoders/encodingOutput/results720pITT/" + xmlFilename):
+                    if path.exists(folder + xmlFilename):
                         for entry in getMetricsFromXML(xmlFilename):
                             csvRow.append(entry)
                         processedFiles += 1

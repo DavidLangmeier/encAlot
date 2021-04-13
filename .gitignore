@@ -7,7 +7,6 @@ encoders/videoSourcefiles/*
 encoders/VVCSoftware_VTM
 encoders/vvenc
 venv
-test.py
 
 # exception to the rule
 !encoders/encodingOutput/.gitkeep

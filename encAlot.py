@@ -1,9 +1,14 @@
-# encAlot v.0.5
+# encAlot
 # a tool to automate batch encoding of video files
+# and extracting metrics from the encoders output and libVMAF files
 # written by David Langmeier
 
 import sys, argparse
 import VVenCFF, VTM, HM
+
+# shared path variables
+output_path = "encoders/encodingOutput/"
+seqCfg_path = "encoders/videoSourcefiles/"
 
 
 def parseArgs():
@@ -19,58 +24,59 @@ def parseArgs():
                            help="Provide 4 target bitrates in bps \'w x y z\'")
     argparser.add_argument("-pre", type=str, required=False, action="store", dest="pre",
                            help="vvenc only: preset \'faster\', \'fast\', \'medium\', \'slow\' or \'slower\'")
-    argparser.add_argument("-thr", type=int, required=False, action="store", dest="thr",
+    argparser.add_argument("-thr", type=int, required=False, action="store", dest="thr", default=1,
                            help="vvenc only: number of threads")
 
     return vars(argparser.parse_args())
 
 
 def main():
-    print("*** encAlot 0.5 started ***\n")
+    print("*** encAlot started ***\n")
 
+    # Argument parsing
     args = parseArgs()
     encoder = args["enc"]
-    seqCfg = args["sc"]
+    seqCfg = seqCfg_path + args["sc"]
     filename = args["fn"]
-    n = len(args["tbr"])
     targetBitrates = args["tbr"]
 
+    # start the actual encoder
     if encoder == "vvencFF":
         encfg = args["pre"]
         threads = 1
-        if int(args["thr"]) > 1 and args["thr"] != None :
+        if int(args["thr"]) > 1 and args["thr"] is not None:
             threads = int(args["thr"])
         for i in targetBitrates:
-            VVenCFF.encode(seqCfg, filename, i, encfg, threads)
+            VVenCFF.encode(seqCfg, filename, i, encfg, threads, output_path)
 
     elif encoder == "vtm":
         for i in targetBitrates:
-            VTM.encode(seqCfg, filename, int(i))
+            VTM.encode(seqCfg, filename, int(i), output_path)
 
     elif encoder == "hm":
         for i in targetBitrates:
-            HM.encode(seqCfg, filename, int(i))
+            HM.encode(seqCfg, filename, int(i), output_path)
 
     elif encoder == "all":
-        # run VVenC
-        encfg = sys.argv[5]
+        # VVenC
+        encfg = args["pre"]
         threads = 1
         if int(args["thr"]) > 1 and args["thr"] != None:
             threads = int(args["thr"])
         for i in targetBitrates:
             VVenCFF.encode(seqCfg, filename, int(i), encfg, threads)
-        # run VTM
+        # VTM
         for i in targetBitrates:
             VTM.encode(seqCfg, filename, int(i))
-        # run HM
+        # HM
         for i in targetBitrates:
             HM.encode(seqCfg, filename, int(i))
 
     else:
-        print("*** ERROR: No valid encoder [-enc] provided. Valid encoders are: 'hm', 'vtm', 'vvencFF' and 'all' ***")
+        print("*** ERROR: Something went wrong. Please check if a valid encoder [-enc] was provided or call --help ***")
         return
 
-    print("*** encAlot : all encodings done ***")
+    print("*** All encodings done ***")
 
 
 if __name__ == "__main__":

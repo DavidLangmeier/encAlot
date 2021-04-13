@@ -7,16 +7,16 @@ from os import path
 import re
 import csv
 
-folder = "encoders/encodingOutput/results720pITT/"
-# folder = "encoders/encodingOutput/"
+# folder = "encoders/encodingOutput/results720pITT/"
+folder = "encoders/encodingOutput/"
 
 
 def getMetricsFromTXT(filename):
     try:
         with open(folder + filename, "rt") as myfile:
             metrics = []
-            bitrate = 2     # default bitrate position for HM, VTM and vvenc
-            runtime = 2     # default runtime position for HM
+            bitrate = 2  # default bitrate position for HM, VTM and vvenc
+            runtime = 2  # default runtime position for HM
 
             if "vvenc" in filename or "VTM" in filename:
                 runtime = 5
@@ -62,8 +62,6 @@ def getMetricsFromXML(xmlFilename):
     except Exception as e:
         print(e)
 
-    return
-
 
 def buildFilename(filename):
     filenameSplit = filename.split("_")
@@ -94,41 +92,43 @@ def sorted_nicely(input):
 def main():
     processedFiles = 0
 
-    # create csv file with header line
-    with open('metrics.csv', mode='w') as metrics_csv:
-        metrics_writer = csv.writer(metrics_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        metrics_writer.writerow(["Filename", "Bitrate", "Runtime", "VMAF", "PSNR", "MS-SSIM"])
+    try:
+        # create csv file with header line
+        with open('encoders/encodingOutput/metrics.csv', mode='w') as metrics_csv:
+            metrics_writer = csv.writer(metrics_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            metrics_writer.writerow(["Filename", "Bitrate", "Runtime", "VMAF", "PSNR", "MS-SSIM"])
 
-        # iterate over all files in given folder
-        for filename in sorted_nicely(os.listdir(folder)):
-            csvRow = []
+            # iterate over all files in given folder
+            for filename in sorted_nicely(os.listdir(folder)):
+                csvRow = []
 
-            # get metrics from encoding output and write to csvRow
-            if filename.endswith("log.txt"):
-                print("*** Current File: " + filename + " ***")
-                print("TableEntry=" + buildTableEntry(filename))
-                csvRow.append(buildTableEntry(filename))
+                # get metrics from encoding output and write to csvRow
+                if filename.endswith("log.txt"):
+                    print("*** Current File: " + filename + " ***")
+                    print("TableEntry=" + buildTableEntry(filename))
+                    csvRow.append(buildTableEntry(filename))
 
-                for entry in getMetricsFromTXT(filename):
-                    csvRow.append(entry)
-
-                processedFiles += 1
-
-                # search for libVMAF output (xml file) with same filename and if it exists
-                # get metrics and write to csvRow
-                xmlFilename = buildFilename(filename)
-                if path.exists("encoders/encodingOutput/results720pITT/" + xmlFilename):
-                    for entry in getMetricsFromXML(xmlFilename):
+                    for entry in getMetricsFromTXT(filename):
                         csvRow.append(entry)
-
                     processedFiles += 1
 
-            # write row to csv file
-            if len(csvRow) != 0:
-                print("ROW: " + str(csvRow) + "\n")
-                metrics_writer.writerow(csvRow)
+                    # search for libVMAF output (xml file) with same filename
+                    # if it exists get metrics and write to csvRow
+                    xmlFilename = buildFilename(filename)
+                    if path.exists("encoders/encodingOutput/results720pITT/" + xmlFilename):
+                        for entry in getMetricsFromXML(xmlFilename):
+                            csvRow.append(entry)
+                        processedFiles += 1
 
-        print("*** Processed " + str(processedFiles) + " files in total ***")
+                # write row to csv file
+                if len(csvRow) != 0:
+                    print("ROW: " + str(csvRow) + "\n")
+                    metrics_writer.writerow(csvRow)
+
+            print("*** Processed " + str(processedFiles) + " files in total ***")
+
+    except Exception as e:
+        print(e)
 
 
 if __name__ == "__main__":

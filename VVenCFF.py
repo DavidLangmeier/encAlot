@@ -1,44 +1,43 @@
 import subprocess
+import sys
 from pathlib import Path
+import Helper
 
-# path variables
-vvencFF_exe = "./encoders/vvenc/bin/release-static/vvencFFapp"
-vvencFF_encoderCfgPath = str("encoders/vvenc/cfg/randomaccess_")
-vvencFF_sequenceConfig = str("encoders/videoSourcefiles/")
-vvencFF_outputPath = str("encoders/encodingOutput/")
+# encoder specific path variables
+vvencFF_root = "encoders/vvenc"
+vvencFF_exe = "./" + Helper.getEXE(vvencFF_root, "vvencFFapp")
+vvencFF_encoderCfgPath = "encoders/vvenc/cfg/randomaccess_"
 
 
-def encode(seqCfg, filename, tbr, encfg, threads):
-    print("*** vvenc encoding started; TargetBitrate = " + str(tbr) + ", preset: " + encfg
-          + ", Threads: " + str(threads) + " ***\n")
+def encode(seqCfg, filename, tbr, encfg, threads, output_path):
+    print("*** vvenc encoding started; Filename: " + filename + ", TargetBitrate: " + str(tbr) + ", preset: " + encfg
+          + ", Threads: " + str(threads) + " ***")
 
-    sequenceConfig = vvencFF_sequenceConfig + str(seqCfg)
-    encoderConfig = vvencFF_encoderCfgPath + str(encfg) + ".cfg"
-    BinaryOutput = (vvencFF_outputPath + str(filename) + "_" + "vvencFF" + "_"
-                    + str(encfg) + "_" + str(int(tbr / 1000)) + "kbps" + "_str.bin")
-    RecOutput = (vvencFF_outputPath + str(filename) + "_" + "vvencFF" + "_"
-                 + str(encfg) + "_" + str(int(tbr / 1000)) + "kbps" + "_rec.yuv")
-    logfile = (vvencFF_outputPath + str(filename) + "_" + "vvencFF" + "_" + str(threads) + "T_"
-               + str(encfg) + "_" + str(int(tbr / 1000)) + "kbps" + "_log.txt")
+    encoderConfig = vvencFF_encoderCfgPath + encfg + ".cfg"
+    BinaryOutput = output_path + filename + "_" + "vvencFF" + "_" \
+                   + encfg + "_" + str(int(tbr / 1000)) + "kbps" + "_str.bin"
+    RecOutput = output_path + filename + "_" + "vvencFF" + "_" \
+                + encfg + "_" + str(int(tbr / 1000)) + "kbps" + "_rec.yuv"
+    logfile = output_path + filename + "_" + "vvencFF" + "_" + str(threads) + "T_" \
+              + encfg + "_" + str(int(tbr / 1000)) + "kbps" + "_log.txt"
     targetBitrate = "--TargetBitrate=" + str(tbr)
 
     options = [vvencFF_exe,
                "-c", Path(encoderConfig),
-               "-c", Path(sequenceConfig),
+               "-c", Path(seqCfg),
                "-b", Path(BinaryOutput),
                "-o", Path(RecOutput),
                targetBitrate]
 
     if threads > 1:
-        numWppThreads = "--NumWppThreads=" + str(threads)
-        wppBitEqual = "--WppBitEqual=1"
-        #options.append(numWppThreads)
-        #options.append(wppBitEqual)
         options.append("--Threads=" + str(threads))
 
     log = open(Path(logfile), "w+")
     result = subprocess.run(options,
                             stdout=log,
-                            stderr=log
+                            stderr=sys.stdout
                             )
     log.close()
+
+    if result.returncode == 0:
+        print("*** encoding finished successfully ***\n")

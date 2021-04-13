@@ -1,1 +1,1 @@
-# encAlot
+# encAlot 1.0

@@ -74,17 +74,15 @@ def installVTM():
 
 
 def main():
-    print("*** encAlot setup started ***\n")
+    print("*** encAlot 1.0 setup started ***\n")
 
     # clone the git repositories and build software
-    print("\n*** encAlot - cloning & building codecs now ***")
-    os.chdir("encoders")
+    os.chdir("codecs")
     installHM()
     installVVenC()
     installVTM()
 
-    print("\n*** all codecs installed and ready ***")
-    print("\n*** setup complete ***")
+    print("\n*** setup finished ***")
 
 
 if __name__ == "__main__":

@@ -4,9 +4,9 @@ from pathlib import Path
 import Helper
 
 # encoder specific path variables
-vtm_root = "encoders/VVCSoftware_VTM"
+vtm_root = "codecs/VVCSoftware_VTM"
 vtm_exe = "./" + Helper.getEXE(vtm_root, "EncoderApp")
-vtm_encoderConfig = Path("encoders/VVCSoftware_VTM/cfg/encoder_randomaccess_vtm_gop16.cfg")
+vtm_encoderConfig = Path("codecs/VVCSoftware_VTM/cfg/encoder_randomaccess_vtm_gop16.cfg")
 
 
 def encode(seqCfg, filename, tbr, output_path):
@@ -31,4 +31,4 @@ def encode(seqCfg, filename, tbr, output_path):
     log.close()
 
     if result.returncode == 0:
-        print("*** encoding finished successfully ***\n")
+        print("*** encoding finished ***\n")

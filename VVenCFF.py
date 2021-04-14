@@ -4,9 +4,9 @@ from pathlib import Path
 import Helper
 
 # encoder specific path variables
-vvencFF_root = "encoders/vvenc"
+vvencFF_root = "codecs/vvenc"
 vvencFF_exe = "./" + Helper.getEXE(vvencFF_root, "vvencFFapp")
-vvencFF_encoderCfgPath = "encoders/vvenc/cfg/randomaccess_"
+vvencFF_encoderCfgPath = "codecs/vvenc/cfg/randomaccess_"
 
 
 def encode(seqCfg, filename, tbr, encfg, threads, output_path):
@@ -40,4 +40,4 @@ def encode(seqCfg, filename, tbr, encfg, threads, output_path):
     log.close()
 
     if result.returncode == 0:
-        print("*** encoding finished successfully ***\n")
+        print("*** encoding finished ***\n")

@@ -4,9 +4,9 @@ from pathlib import Path
 import Helper
 
 # encoder specific path variables
-hm_root = "encoders/HM"
+hm_root = "codecs/HM"
 hm_exe = "./" + Helper.getEXE(hm_root, "TAppEncoder")
-hm_encoderConfig = Path("encoders/HM/cfg/encoder_randomaccess_main.cfg")
+hm_encoderConfig = Path("codecs/HM/cfg/encoder_randomaccess_main.cfg")
 
 
 def encode(seqCfg, filename, tbr, output_path):
@@ -31,4 +31,4 @@ def encode(seqCfg, filename, tbr, output_path):
     log.close()
 
     if result.returncode == 0:
-        print("*** encoding finished successfully ***\n")
+        print("*** encoding finished ***\n")

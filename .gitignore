@@ -1,14 +1,14 @@
-# exclude everything of the "encoders" folder structure but the folders themselves
+# exclude everything of the "codecs" folder structure but the folders themselves
 
 # exclude everything
-encoders/encodingOutput/*
-encoders/HM
-encoders/videoSourcefiles/*
-encoders/VVCSoftware_VTM
-encoders/vvenc
+encodingOutput/*
+codecs/HM
+videoSources/*
+codecs/VVCSoftware_VTM
+codecs/vvenc
 venv
 
 # exception to the rule
-!encoders/encodingOutput/.gitkeep
-!encoders/videoSourcefiles/.gitkeep
-!encoders/videoSourcefiles/*.cfg
+!encodingOutput/.gitkeep
+!videoSources/.gitkeep
+!videoSources/*.cfg

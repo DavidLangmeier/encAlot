@@ -7,8 +7,7 @@ from os import path
 import re
 import csv
 
-# folder = "encoders/encodingOutput/results720pITT/"
-folder = "encoders/encodingOutput/"
+folder = "encodingOutput/"
 
 
 def getMetricsFromTXT(filename):
@@ -94,7 +93,7 @@ def main():
 
     try:
         # create csv file with header line
-        with open('encoders/encodingOutput/metrics.csv', mode='w') as metrics_csv:
+        with open('encodingOutput/metrics.csv', mode='w') as metrics_csv:
             metrics_writer = csv.writer(metrics_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             metrics_writer.writerow(["Filename", "Bitrate", "Runtime", "VMAF", "PSNR", "MS-SSIM"])
 
@@ -104,8 +103,7 @@ def main():
 
                 # get metrics from encoding output and write to csvRow
                 if filename.endswith("log.txt"):
-                    print("*** Current File: " + filename + " ***")
-                    print("TableEntry=" + buildTableEntry(filename))
+                    print("\n*** Current File: " + filename + " ***")
                     csvRow.append(buildTableEntry(filename))
 
                     for entry in getMetricsFromTXT(filename):
@@ -122,7 +120,6 @@ def main():
 
                 # write row to csv file
                 if len(csvRow) != 0:
-                    print("ROW: " + str(csvRow) + "\n")
                     metrics_writer.writerow(csvRow)
 
             print("*** Processed " + str(processedFiles) + " files in total ***")

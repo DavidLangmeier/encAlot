@@ -11,27 +11,25 @@ seqCfg_path = "videoSources/"
 
 
 def parseArgs():
-    argparser = argparse.ArgumentParser(description="encAlot help")
+    argparser = argparse.ArgumentParser(description="encAlot 1.0")
 
     argparser.add_argument("-enc", type=str, required=True, dest="enc",
-                           help="Encoder has to be \'hm\', \'vtm\', \'vvencFF\', or \'all\'")
+                           help="Encoder has to be <hm>, <vtm>, <vvenc>, or <all>")
     argparser.add_argument("-sc", type=str, required=True, dest="sc",
-                           help="Sequence specific config file. Has to be at encAlot/codecs/videoSourcefiles")
+                           help="Sequence specific config file <example.cfg>. Has to be at encAlot/videoSources")
     argparser.add_argument("-fn", type=str, required=True, dest="fn",
-                           help="Filename to identify output")
+                           help="Filename prefix for better output identification")
     argparser.add_argument("-tbr", type=int, nargs="+", required=True, dest="tbr",
-                           help="Provide 1-n target bitrates in bps \'w x y z\'")
+                           help="Provide 1-n target bitrates in bps <tbr1 tbr2 tbr3 ...>")
     argparser.add_argument("-pre", type=str, required=False, dest="pre",
-                           help="vvenc only: preset has to be \'faster\', \'fast\', \'medium\', \'slow\' or \'slower\'")
+                           help="vvenc only - preset has to be <faster>, <fast>, <medium>, <slow> or <slower>")
     argparser.add_argument("-thr", type=int, required=False, dest="thr", default=1,
-                           help="vvenc only: number of threads, default=1")
+                           help="vvenc only - number of threads, default=1")
 
     return vars(argparser.parse_args())
 
 
 def main():
-    print("*** encAlot 1.0 started ***\n")
-
     # Argument parsing
     args = parseArgs()
     encoder = args["enc"]
@@ -40,6 +38,8 @@ def main():
     targetBitrates = args["tbr"]
 
     # start the actual encoder
+    print("*** encAlot 1.0 started ***\n")
+
     if encoder == "vvenc":
         encfg = args["pre"]
         threads = 1

@@ -9,7 +9,7 @@ usage: encAlot.py -enc 'encoder' -sc 'sequence_config' -fn 'filename' -tbr 'targ
 *'sequence_config'* is the sequence specific configuration, has to be at /encAlot/videoSources. There is an example config there.<br>
 *'filename'* will be the Prefix of the encoding output filenames, use for better identification of encodings (i.e. short version of source sequence).<br>
 *'targetbitrates'* are the desired bitrates for the encodings in bytes per second. Provide 1-n bitrates for 1-n encodings.<br>
-*'preset'* is only required when using vvenc. Has to be 'faster', 'fast', 'medium', 'slow' or 'slower'.<br>
+*'preset'* is only required when using vvenc. Has to be 'faster', 'fast', 'medium', 'slow' or 'slower'. Provide 1-5 presets.<br>
 *'threads'* is only required when using vvenc and sets the number of threads for multi-threaded encoding. Default is 1.<br>
 <br>
 **GetMetrics.py**:<br>

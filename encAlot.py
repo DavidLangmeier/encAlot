@@ -2,7 +2,7 @@
 # a tool to automate batch encoding of video files and extract metrics from encoder and libVMAF output
 # written by David Langmeier
 
-import sys, argparse
+import argparse
 import VVenC, VTM, HM
 
 # shared path variables
@@ -30,10 +30,11 @@ def parseArgs():
 
 
 def main():
+    global seqCfg_path
     # Argument parsing
     args = parseArgs()
     encoders = args["enc"]
-    seqCfg = seqCfg_path + args["sc"]
+    seqCfg_path += args["sc"]
     filename = args["fn"]
     targetBitrates = args["tbr"]
 
@@ -49,15 +50,15 @@ def main():
                 if int(args["thr"]) > 1 and args["thr"] is not None:
                     threads = int(args["thr"])
                 for i in targetBitrates:
-                    VVenC.encode(seqCfg, filename, i, preset, threads, output_path)
+                    VVenC.encode(seqCfg_path, filename, i, preset, threads, output_path)
 
         elif encoder == "vtm":
             for i in targetBitrates:
-                VTM.encode(seqCfg, filename, int(i), output_path)
+                VTM.encode(seqCfg_path, filename, int(i), output_path)
 
         elif encoder == "hm":
             for i in targetBitrates:
-                HM.encode(seqCfg, filename, int(i), output_path)
+                HM.encode(seqCfg_path, filename, int(i), output_path)
 
         else:
             print("*** ERROR: Something went wrong. Please check if encoder names [-enc] were correct"

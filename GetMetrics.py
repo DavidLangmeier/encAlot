@@ -10,10 +10,10 @@ import csv
 folder = "encodingOutput/"
 
 
-def getMetricsFromTXT(filename):
+def getDataFromLogfile(filename):
     try:
         with open(folder + filename, "rt") as myfile:
-            metrics = []
+            data = []
             bitrate = 2  # default bitrate position for HM, VTM and vvenc
             runtime = 2  # default runtime position for HM
 
@@ -25,15 +25,15 @@ def getMetricsFromTXT(filename):
                 if " a " in line:
                     split = line.split()
                     print("Bitrate=" + split[bitrate])
-                    metrics.append(split[bitrate])
+                    data.append(split[bitrate])
 
                 # search for runtime
                 if "Total Time" in line:
                     split = line.split()
                     print("Runtime=" + split[runtime])
-                    metrics.append(split[runtime])
+                    data.append(split[runtime])
 
-            return metrics
+            return data
 
     except Exception as e:
         print(e)
@@ -106,7 +106,7 @@ def main():
                     print("\n*** Current File: " + filename + " ***")
                     csvRow.append(buildTableEntry(filename))
 
-                    for entry in getMetricsFromTXT(filename):
+                    for entry in getDataFromLogfile(filename):
                         csvRow.append(entry)
                     processedFiles += 1
 

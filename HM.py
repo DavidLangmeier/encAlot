@@ -5,11 +5,11 @@ import Helper
 
 # encoder specific path variables
 hm_root = "codecs/HM"
-hm_exe = "./" + Helper.getEXE(hm_root, "TAppEncoder")
+hm_exe = Helper.getEXE(hm_root, "TAppEncoder")
 hm_encoderConfig = Path("codecs/HM/cfg/encoder_randomaccess_main.cfg")
 
 
-def encode(seqCfg, filename, tbr, output_path):
+def encode(seqCfg_path, filename, tbr, output_path):
     print("*** HEVC-HM encoding started, Filename: " + filename + ", TargetBitrate: " + str(tbr) + " ***")
 
     binaryOutput = output_path + filename + "_" + "HM" + "_" + str(int(tbr / 1000)) + "kbps" + "_str.bin"
@@ -20,7 +20,7 @@ def encode(seqCfg, filename, tbr, output_path):
     log = open(Path(logfile), "w+")
     result = subprocess.run([hm_exe,
                              "-c", hm_encoderConfig,
-                             "-c", Path(seqCfg),
+                             "-c", Path(seqCfg_path),
                              "-b", Path(binaryOutput),
                              "-o", Path(recOutput),
                              targetBitrate,

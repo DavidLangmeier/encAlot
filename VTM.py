@@ -5,11 +5,11 @@ import Helper
 
 # encoder specific path variables
 vtm_root = "codecs/VVCSoftware_VTM"
-vtm_exe = "./" + Helper.getEXE(vtm_root, "EncoderApp")
+vtm_exe = Helper.getEXE(vtm_root, "EncoderApp")
 vtm_encoderConfig = Path("codecs/VVCSoftware_VTM/cfg/encoder_randomaccess_vtm_gop16.cfg")
 
 
-def encode(seqCfg, filename, tbr, output_path):
+def encode(seqCfg_path, filename, tbr, output_path):
     print("*** VVC-VTM encoding started; Filename: " + filename + ", TargetBitrate: " + str(tbr) + " ***")
 
     binaryOutput = output_path + filename + "_" + "VTM" + "_" + str(int(tbr / 1000)) + "kbps" + "_str.bin"
@@ -20,7 +20,7 @@ def encode(seqCfg, filename, tbr, output_path):
     log = open(Path(logfile), "w+")
     result = subprocess.run([vtm_exe,
                              "-c", vtm_encoderConfig,
-                             "-c", Path(seqCfg),
+                             "-c", Path(seqCfg_path),
                              "-b", Path(binaryOutput),
                              "-o", Path(recOutput),
                              targetBitrate,
